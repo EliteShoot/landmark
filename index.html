@@ -119,9 +119,9 @@
 											<span>Job type:</span>
 											<div class="wc-select position-relative">
 												<select name="job-type">
-													<option value="#">Select</option>
-													<option value="#">Commercial</option>
-													<option value="#">Residential</option>
+													<option value="select">Select</option>
+													<option value="commercial">Commercial</option>
+													<option value="residential">Residential</option>
 												</select required>
 											</div>
 										</div>
@@ -131,19 +131,19 @@
 											<span>Date:</span>
 											<div class="wc-select position-relative">
 												<select name="date">
-													<option value="#">Select</option>
-													<option value="#">ASAP</option>
-													<option value="#">1-5 Days</option>
-													<option value="#">6-30 Days</option>
+													<option value="select">Select</option>
+													<option value="asap">ASAP</option>
+													<option value="1-5d">1-5 Days</option>
+													<option value="6-30d">6-30 Days</option>
 												</select required>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="wc-input">
 											<span>Name:</span>
 											<div class="wc-text-input position-relative">
-												<input type="text" placeholder="Your Name" required>
+												<input name="name" type="name" placeholder="Your Name" required>
 											</div>
 										</div>
 									</div>
@@ -152,6 +152,14 @@
 											<span>Email:</span>
 											<div class="wc-text-input position-relative">
 												<input name="email" type="email" placeholder="Your Email" required>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="wc-input">
+											<span>Phone:</span>
+											<div class="wc-text-input position-relative">
+												<input name="phone" type="phone" placeholder="Your Phone" required>
 											</div>
 										</div>
 									</div>
