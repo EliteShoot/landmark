@@ -5646,7 +5646,7 @@ select:visited {
   transition: 500ms all ease;
 }
 .ft-case-study-items .ft-case-study-text .serial-no {
-  color: #fa4318;
+  color: #e29652;
   font-size: 20px;
   font-weight: 500;
 }
@@ -5755,7 +5755,7 @@ select:visited {
   position: absolute;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  background-color: #fe484e;
+  background-color: #e29652;
 }
 .ft-thx-project-slider-item:hover .ft-thx-inner-text {
   left: 0;
@@ -5771,7 +5771,7 @@ select:visited {
   width: 50px;
   height: 50px;
   margin-left: 10px;
-  background-color: #fe484e;
+  background-color: #e29652;
 }
 .port_left_arrow:hover, .port_left_arrow:focus,
 .port_right_arrow:hover,
