@@ -5808,7 +5808,7 @@ select:visited {
 }
 .pr-sv-case-study-filter-btn li.filtr-active {
   color: #fff;
-  background-color: #fe484e;
+  background-color: #e29652;
 }
 
 .pr-sv-case-study-item {
@@ -5843,7 +5843,7 @@ select:visited {
   font-size: 30px;
   text-align: center;
   position: absolute;
-  color: #fe484e;
+  color: #e29652;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
