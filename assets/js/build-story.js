@@ -11,7 +11,8 @@ const progress = document.getElementById('story-progress');
 const buttons = [...root.querySelectorAll('[data-stage]')];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const names = ['groundwork','foundation','framing','shell','finished','entrance','interior'];
-const images = names.map(name => { const im = new Image(); im.src = `assets/images/journey/${name}.webp?v=3`; im.onload = wake; return im; });
+function openingSource(){return `assets/images/journey/${matchMedia('(max-width:600px)').matches?'groundwork-mobile':'groundwork-original'}.webp?v=5`;}
+const images = names.map(name => { const im = new Image(); im.decoding='async'; im.onload=wake; im.src=name==='groundwork'?openingSource():`assets/images/journey/${name}.webp?v=3`; return im; });
 const points = [0,.15,.31,.46,.61,.79,.94];
 const destinations = [0,.31,.61,.94];
 const copy = [
@@ -24,7 +25,7 @@ let width=0,height=0,dpr=1,target=0,current=0,lastTime=0,raf=0,visible=true,acti
 const clamp = x=>Math.max(0,Math.min(1,x));
 const ease = x=>{x=clamp(x);return x*x*(3-2*x);};
 function ready(im){return im.complete&&im.naturalWidth>0;}
-function resize(){width=stage.clientWidth;height=stage.clientHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);measure();}
+function resize(){width=stage.clientWidth;height=stage.clientHeight;dpr=Math.min(devicePixelRatio||1,width<=800?3:2,Math.sqrt(6000000/(width*height)));canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";if(!images[0].src.endsWith(openingSource()))images[0].src=openingSource();measure();}
 function measure(){target=clamp(-root.getBoundingClientRect().top/Math.max(1,root.offsetHeight-height));wake();}
 function wake(){if(!raf&&visible&&!document.hidden)raf=requestAnimationFrame(tick);}
 function camera(im,zoom=1,focusX=.5,focusY=.5){if(!ready(im))return;const cover=Math.max(width/im.naturalWidth,height/im.naturalHeight);const w=im.naturalWidth*cover*zoom,h=im.naturalHeight*cover*zoom;const x=Math.min(0,Math.max(width-w,width*.5-w*focusX));const y=Math.min(0,Math.max(height-h,height*.5-h*focusY));ctx.drawImage(im,x,y,w,h);}
