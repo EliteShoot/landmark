@@ -12,7 +12,6 @@ const buttons = [...root.querySelectorAll('[data-stage]')];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const names = ['groundwork','foundation','framing','shell','finished','entrance','interior'];
 const images = names.map(name => { const im = new Image(); im.src = `assets/images/journey/${name}.webp?v=3`; im.onload = wake; return im; });
-const digger = new Image(); digger.src = 'assets/images/journey/excavator-poses.webp?v=3'; digger.onload = wake;
 const points = [0,.15,.31,.46,.61,.79,.94];
 const destinations = [0,.31,.61,.94];
 const copy = [
@@ -39,21 +38,15 @@ function flyThrough(p){if(p<.79){const u=ease((p-.61)/.18);camera(images[4],1.02
  else if(p<.94){const u=ease((p-.79)/.15);camera(images[5],1.07+.45*u,.5,.53);const blend=ease((u-.35)/.65);if(blend&&ready(images[6])){ctx.save();ctx.globalAlpha=blend;camera(images[6],1+u*.045,.5,.5);ctx.restore();}}
  else camera(images[6],1.045+ease((p-.94)/.06)*.025,.5,.5);
 }
-function excavator(p,time){if(p>.21||!ready(digger))return;const opacity=1-ease((p-.16)/.05);const mobile=width<600;const w=width*(mobile?.63:.31);const h=w*(digger.naturalHeight/2)/(digger.naturalWidth/2);const travel=ease(p/.19);const x=width*(mobile?.08:.1)+travel*width*.35;const y=height*.85-h+Math.sin(time*.015)*.45;
- // Four photographic boom poses cycle while the tracks travel across the site.
- const cycle=[0,1,2,3,2,1];const frame=cycle[Math.floor(time/240)%cycle.length];const sw=digger.naturalWidth/2,sh=digger.naturalHeight/2;
- ctx.save();ctx.globalAlpha=opacity;ctx.fillStyle='rgba(16,12,8,.22)';ctx.beginPath();ctx.ellipse(x+w*.35,y+h*.93,w*.32,h*.04,0,0,Math.PI*2);ctx.fill();ctx.drawImage(digger,(frame%2)*sw,Math.floor(frame/2)*sh,sw,sh,x,y,w,h);
- // Fine drifting dust sits behind the moving tracks, with no blur filters.
- for(let n=0;n<10;n++){const life=((time/1700+n*.113)%1);ctx.globalAlpha=opacity*(1-life)*.12;ctx.fillStyle='#bfa17b';ctx.beginPath();ctx.arc(x+w*.2-life*w*.15,y+h*.9-life*height*.04,2+life*6,0,Math.PI*2);ctx.fill();}ctx.restore();}
 function labels(p){const index=p<.24?0:p<.57?1:p<.85?2:3;if(active!==index){active=index;const c=copy[index];document.getElementById('story-kicker').textContent=c[0];document.getElementById('story-title').innerHTML=c[1];document.getElementById('story-description').textContent=c[2];document.getElementById('story-phase').textContent=c[3];document.getElementById('story-number').textContent=String(index+1).padStart(2,'0');buttons.forEach((b,i)=>i===index?b.setAttribute('aria-current','step'):b.removeAttribute('aria-current'));}
  // Clear the screen while the camera travels through the entry.
  const opacity=p>.66&&p<.94?1-Math.sin(clamp((p-.66)/.28)*Math.PI):1;copyBox.style.opacity=String(opacity);copyBox.style.transform=`translateY(${(1-opacity)*-18}px)`;progress.style.width=`${p*100}%`;
 }
 function tick(time){raf=0;const dt=Math.min(64,time-(lastTime||time));lastTime=time;current+= (target-current)*(1-Math.exp(-dt/85));if(Math.abs(target-current)<.0001)current=target;const p=current;
  if(reduced.matches){if(ready(images[4])){camera(images[4]);canvas.classList.add('loaded');}labels(.61);return;}
- if(ready(images[0])){ctx.fillStyle='#172016';ctx.fillRect(0,0,width,height);const missing=images.slice(0,p<.61?Math.min(5,Math.floor(p/.15)+2):7).some(im=>!ready(im));if(missing){const fallback=images.slice(0,Math.min(7,Math.floor(p/.15)+1)).reverse().find(ready);if(fallback)camera(fallback);}else if(p<.61)construction(p);else flyThrough(p);excavator(p,time);canvas.classList.add('loaded');}
+ if(ready(images[0])){ctx.fillStyle='#172016';ctx.fillRect(0,0,width,height);const missing=images.slice(0,p<.61?Math.min(5,Math.floor(p/.15)+2):7).some(im=>!ready(im));if(missing){const fallback=images.slice(0,Math.min(7,Math.floor(p/.15)+1)).reverse().find(ready);if(fallback)camera(fallback);}else if(p<.61)construction(p);else flyThrough(p);canvas.classList.add('loaded');}
  labels(p);
- if(visible&&!document.hidden&&(current!==target||p<=.21))raf=requestAnimationFrame(tick);
+ if(visible&&!document.hidden&&current!==target)raf=requestAnimationFrame(tick);
 }
 buttons.forEach((b,i)=>b.addEventListener('click',()=>{const top=scrollY+root.getBoundingClientRect().top;scrollTo({top:top+destinations[i]*(root.offsetHeight-height),behavior:reduced.matches?'instant':'smooth'});}));
 addEventListener('scroll',measure,{passive:true});addEventListener('resize',resize);document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0;}else wake();});reduced.addEventListener('change',()=>{resize();wake();});
