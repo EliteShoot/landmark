@@ -11,8 +11,8 @@ const progress = document.getElementById('story-progress');
 const buttons = [...root.querySelectorAll('[data-stage]')];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const names = ['groundwork','foundation','framing','shell','finished','entrance','interior'];
-const images = names.map(name => { const im = new Image(); im.src = `assets/images/journey/${name}.webp`; im.onload = wake; return im; });
-const digger = new Image(); digger.src = 'assets/images/journey/excavator-poses.webp'; digger.onload = wake;
+const images = names.map(name => { const im = new Image(); im.src = `assets/images/journey/${name}.webp?v=3`; im.onload = wake; return im; });
+const digger = new Image(); digger.src = 'assets/images/journey/excavator-poses.webp?v=3'; digger.onload = wake;
 const points = [0,.15,.31,.46,.61,.79,.94];
 const destinations = [0,.31,.61,.94];
 const copy = [
